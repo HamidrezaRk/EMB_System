@@ -1,0 +1,78 @@
+﻿@model IEnumerable<emb_project.Entity.Category>
+
+<link href="~/AdminPanel_V2/dist/css/sweetalert2.min.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-md-8 col-lg-8 offset-2">
+        <div class="card card-primary card-outline" style="margin:10px;padding:10px;">
+            <div class="header">
+                <h4 class="title pull-right">دسته بندی ها</h4>
+                <h4 class="title pull-left">
+                    <a asp-controller="Category" asp-action="Create" class=" btn btn-outline-primary">جدید</a>
+
+                </h4>
+                <div class="clearfix"></div>
+                <br />
+
+            </div>
+            <div class="content table-responsive table-full-width">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Title)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Description)
+                                </td>
+                                <td>
+                                    <a class="btn" asp-controller="Category" asp-action="Edit" asp-route-id="@item.id">
+                                        <i class="fa fa-edit" style="color:#495057" data-toggle="tooltip" title="تغییر"></i>
+                                    </a>
+                                   
+                                    <a href="#" onclick="myDelete('@item.id)">
+                                        <i class="fa fa-trash-o" style="color:#dc3545;font-size:15px;" data-toggle="tooltip" title="حذف"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/AdminPanel_V2/dist/js/sweetalert2.min.js"></script>
+@section PanelScripts{
+    <script>
+        function myDelete(id) {
+
+            swal({
+                title: "تأیید حذف",
+                text: "آیا از حذف این دسته بندی اطمینان دارید؟",
+                icon: "warning",
+                buttons: ['لغو', 'بلی'],
+                dangerMode: true,
+            }).then((willDelete) => {
+                alert('b');
+                if (willDelete) {
+                    window.open('/Category/Delete/' + id, '_parent');
+                }
+            });
+
+        }
+    </script>
+}

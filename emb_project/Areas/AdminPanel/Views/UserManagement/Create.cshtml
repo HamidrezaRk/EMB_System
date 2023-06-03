@@ -1,0 +1,170 @@
+﻿@model emb_project.Entity.User
+<link href="~/persiandatepicker/jquery.Bootstrap-PersianDateTimePicker.css" rel="stylesheet" />
+<style>
+    .circleInput {
+        border-radius: 3px;
+    }
+</style>
+
+
+
+<div class="card card-primary col-md-8 col-lg-8 offset-2" >
+    <div class="card-header">
+        <h3 class="card-title">فرم ایجاد کاربر</h3>
+    </div>
+
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form asp-area="AdminPanel" asp-controller="News" asp-action="Create" method="post" enctype="multipart/form-data" >
+        <div class="card-body">
+            <!-- /FullName -->
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label"></label>
+                <input asp-for="FullName" class="form-control circleInput" placeholder="نام را وارد نمایید" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <!-- /End-FullName -->
+            <!-- /UserName -->
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control circleInput" placeholder="نام کاربری را وارد نمایید" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <!-- /End-UserName -->
+            <!-- /Password -->
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control circleInput" placeholder="رمز را وارد نمایید" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <!-- /End-Password -->
+            <!-- /mobile -->
+            <div class="form-group">
+                <label asp-for="mobile" class="control-label"></label>
+                <input asp-for="mobile" class="form-control circleInput" />
+                <span asp-validation-for="mobile" class="text-danger"></span>
+            </div>
+            <!-- /RoleUser-->
+            <div class="form-group">
+                <label asp-for="RoleId_Fk" class="control-label"></label>
+                <select class="form-control BorderElement" asp-for="RoleId_Fk" asp-items="ViewBag.Roleid_fk"></select>
+                <span asp-validation-for="RoleId_Fk" class="text-danger"></span>
+            </div>
+            <!-- /End-RoleUser-->
+            <!-- /Date-->
+            <div class="form-group" style="height:30px; margin-bottom:25px;">
+                <div style="font-size:15px;" class="col-md-6">
+                    <label asp-for="Date_Register" class="col-md-4 control-label"></label>
+                    <input asp-for="Date_Register" type="text" value="@ViewBag.Shamsidate" style="border:0px;" />
+                </div>
+                <div style="font-size:15px;" class="col-md-6">
+                    <input type="date" id="birthday" name="birthday" data-jdp>
+                    <label asp-for="BirthDate" class="col-md-4 control-label"></label>
+                    <input asp-for="BirthDate" type="text" style="border:0px;" />
+                </div>
+
+            </div>
+            <!-- /End-Date -->
+            <!-- /End-mobile -->
+            <!-- Start upload -->
+            <div class="form-group">
+                <label for="exampleInputFile">ارسال فایل</label>
+                <div class="input-group">
+                    <div class="custom-file">
+
+                        <input asp-for="UserAvatar" type="file" class="custom-file-input" id="files" name="files">
+
+                        <label asp-for="UserAvatar" class="custom-file-label" for="exampleInputFile">انتخاب فایل</label>
+                    </div>
+                    <div class="input-group-append">
+
+                        <input type="button" onclick="UploadImage()" id="btnupload" class="btn btn-info" value="Submit" />
+                    </div>
+
+                </div>
+
+                <!-- Start messagebox -->
+
+                <div id="divmessage" class="text-center hidden" style="color:green;">
+                </div>
+
+                <div id="divmessage-error" class="text-center hidden" style="color:red;">
+                </div>
+                <!-- End messagebox -->
+            </div>
+            <!-- End upload -->
+
+        </div>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">ارسال</button>
+            <a asp-action="Index" class="btn btn-danger">بازگشت</a>
+        </div>
+    </form>
+</div>
+
+
+
+
+@section PanelScripts{
+    <script src="~/persiandatepicker/calendar.js"></script>
+    <script src="~/persiandatepicker/jquery.Bootstrap-PersianDateTimePicker.js"></script>
+
+
+    <script>
+        var jalaliDatepicker = {};
+        jalaliDatepicker.startWatch({
+            dayRendering: function (dayOptions, input) {
+                return {
+                    isHollyDay: dayOptions.month == 1 && dayOptions.day <= 4,
+                    // isValid = false, امکان غیر فعال کردن روز
+                    // className = "nowruz" امکان افزودن کلاس برای درج استایل به روز
+                }
+            }
+        })
+
+
+        jalaliDatepicker.show(input);
+        jalaliDatepicker.hide();
+        jalaliDatepicker.updateOptions(options);
+
+
+        /*< !-- /DatePicker -->*/
+        var UploadImage = function () {
+            var data = new FormData;
+            var file = $("#files").get(0);
+            var files = file.files;
+
+            for (var i = 0; i < files.length; i++) {
+                data.append('files', files[i]);
+            }
+
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("UploadFile", "UserManagement", new { area = "AdminPanel"})',
+                data: data,
+                contentType: false,
+                processData: false,
+            }).done(function (result) {
+                if (result.status == "success") {
+
+                    $("#imgindex").attr('src', "\\upload\\userimage\\normalimage\\" + result.imagename);
+
+                    $("#divmessage").removeClass('hidden');
+                    $("#divmessage").text("تصویر با موفقیت آپلود شد");
+
+                    $("#IndexImage").val(result.imagename);
+                    }
+                }).fail(function (result) {
+                    if (result.status != "success") {
+                        $("#divmessage-error").removeClass('hidden');
+                        $("#divmessage-error").text("در هنگام آپلود مشکلی رخ داد");
+
+                    }
+                });
+        }
+    </script>
+
+
+}

@@ -1,0 +1,73 @@
+﻿@model IEnumerable<emb_project.Entity.User>
+<div class="row">3
+    <div class="col-md-8 col-lg-8 offset-2">
+        <div class="card card-primary card-outline" style="margin:10px;padding:10px;">
+            <div class="header">
+                <h4 class="title pull-right">لیست کاربران</h4>
+                <h4 class="title pull-left">
+                    <a asp-controller="UserManagement" asp-action="Create" class=" btn btn-outline-primary">افزودن کاربر</a>
+                </h4>
+                <div class="clearfix"></div>
+                <br />
+
+            </div>
+            <div class="content table-responsive table-full-width">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.FullName)</td>
+                            <td>@Html.DisplayNameFor(model => model.UserName)</td>
+                            <td>@Html.DisplayNameFor(model => model.mobile)</td>
+                            <td>@Html.DisplayNameFor(model => model.BirthDate)</td>
+                            <td>@Html.DisplayNameFor(model => model.Date_Register)</td>
+                            <td>@Html.DisplayNameFor(model => model.Role.Title)</td>
+                            <td>عملیات</td>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.FullName</td>
+                                <td>@item.UserName</td>
+                                <td>@item.mobile</td>
+                                <td>@item.BirthDate</td>
+                                <td>@item.Date_Register</td>
+                                <td>@item.Role.Title</td>
+                                <td>
+                                    <a class="btn" asp-controller="UserManagement" asp-action="Edit" asp-route-id="@item.Id">
+                                        <i class="fa fa-edit" style="color:#495057"></i>
+                                    </a>
+                                    <a href="#" onclick="FuncDelUser('@item.Id')">
+                                        <i class="fa fa-trash" style="color:#ca0808"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section PanelScripts{
+    <script>
+            function FuncDelUser(id) {
+
+                $.ajax({
+                    url: "/AdminPanel/UserManagement/Delete?id=" + id,
+                    type: "Get",
+                    data: {}
+                }).done(function (result) {
+                    $('#myModal').modal('show');
+                    $('#bodymodal').html(result);
+                });
+            }
+
+        </script>
+
+     
+
+}

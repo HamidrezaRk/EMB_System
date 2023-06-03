@@ -1,0 +1,82 @@
+﻿@model IEnumerable<emb_project.Entity.Role>
+<div class="row center-block box box-success" style="box-shadow:2px 2px 7px 3px gray;">
+    <div class="panel panel-primary col-md-8 col-md offset-2" style="margin-top:25px; margin-bottom:25px;">
+
+        <div class="panel-body">
+            <div>
+                <a class="btn btn-primary" asp-controller="Role" asp-action="Create">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    جدید
+                </a>
+            </div>
+        </div>
+
+        <hr style="height:1px; background-color:gray;" />
+
+        <table class="table table-responsive text-center">
+            <thead>
+                <tr style="font-size:15px; font-weight:600;">
+                    <td>@Html.DisplayNameFor(model => model.Title)</td>
+                    <td>@Html.DisplayNameFor(model =>
+                   model.Name)</td>
+                    <td>عملیات</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>@item.Name</td>
+                        <td>
+                            <a class="btn" asp-controller="Role" asp-action="Edit" asp-route-id="@item.Id">
+                                <i class="fa fa-edit" style="color:#495057" data-toggle="tooltip" title="تغییر"></i>
+                            </a>
+                            <a href="#" class="btn" onclick="FuncDelAccount(@item.Id)">
+                                <i class="fa fa-trash-o" style="color:#dc3545;font-size:15px;" data-toggle="tooltip" title="حذف"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="color:#110e0e !important; direction:rtl !important;text-align:right !important">
+        <div class="modal-dialog modal-lg form-horizontal" role="document">
+            <div class="modal-content">
+                <div class="modal-body" id="bodymodal">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section PanelScripts{
+    <script>
+        function FuncDelAccount(id) {
+            $.ajax({
+                url: "/AdminPanel/Role/Delete?id=" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#bodymodal').html(result);
+            });
+        }
+    </script>
+}
+@*@section Scripts
+    {
+        <script>
+            $(document).ready(function () {
+                $("#mySearch").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#myTable tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+        </script>
+    }*@
+}

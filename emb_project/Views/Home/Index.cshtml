@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewData["Title"] = "EMB ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Preloader -->
+@Html.Partial("_PreLoader")
+<!-- End Preloader -->
+<!-- Start Navbar Area -->
+@Html.Partial("_NavbarArea")
+<!-- End Navbar Area -->
+<!-- Slider area -->
+@Html.Partial("_SliderArea")
+<!-- End Slider aera -->
+<!-- Service area -->
+@Html.Partial("_ServiesArea")
+<!-- End Service area -->
+
+<div class="shape-ellips">
+    <img src="~/images/shape.png" alt="shape" />
+</div>
+
+<!-- Regular Course area  -->
+@Html.Partial("_RegularCourseArea")
+<!-- End Regular Course area  -->
+<!-- Choose area  -->
+@Html.Partial("_ChooseArea")
+<!-- End Choose area -->
+<!-- Admission Area -->
+@Html.Partial("_AdmissionArea")
+<!-- End Admission Area -->
+<!-- Special Course -->
+@Html.Partial("_SpecialCourse")
+<!-- End Special Course -->
+<!-- Course Slider  -->
+@Html.Partial("_CourseSlider")
+<!-- End Course Slider -->
+
+<span class="left-shape">
+    <img src="~/images/left-shape.png" alt="shape" />
+</span>
+
+<!-- News Area -->
+@Html.Partial("_NewsArea")
+<!--تبلیغ زیر آخرین اخبار وبلاگ-->
+@*@if (Model.AdvertiseUnderNewsArea != null)
+    {
+        <div>
+            <a href="@Model.AdvertiseUnderNewsArea.Link">
+                <img src="~/upload/advertise/@Model.AdvertiseUnderNewsArea.gifPath" class="adverse-mainSlide-buttom" style="height:70px" />
+            </a>
+        </div>*@
+
+}
+<!--تبلیغ زیر آخرین اخبار وبلاگ-->
+<!-- End News Area -->
+<!-- Teachers Area -->
+@Html.Partial("_TeacherArea")
+<!-- End Teachers Area -->
+<!-- Contact Area -->
+@Html.Partial("_ContactArea")
+<!-- End Contact Area -->
+<!-- Footer Area -->
+@Html.Partial("_FooterArea")
+<!-- End Footer Area -->
+<!-- Copy Area -->
+@Html.Partial("_CopyArea")
+<!-- End Copy Area -->
+<script>
+    $('#myTabs a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+</script>

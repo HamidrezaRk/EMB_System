@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>@ViewData["Title"] </title>
+    <meta name="keywords" content="HTML5,CSS3,HTML,Template,multi-page,Edvi - Education HTML Template">
+    <meta name="description" content="Edvi - Education HTML Template">
+    <meta name="author" content="Barat Hadian">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap.min.css" />
+    <!-- MeanMenu CSS -->
+    <link rel="stylesheet" href="~/css/meanmenu.css" />
+    <!-- Fontawsome CSS -->
+    <link rel="stylesheet" type="text/css" href="~/css/fontawesome-all.min.css" />
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" type="text/css" href="~/css/flaticon.css" />
+    <!-- Magnific CSS -->
+    <link rel="stylesheet" type="text/css" href="~/css/magnific-popup.css" />
+    <!-- Animate CSS -->
+    <link rel="stylesheet" type="text/css" href="~/css/animate.css" />
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" />
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="~/css/style.css" />
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="~/css/responsive.css" />
+    <!-- RTL CSS -->
+    <link rel="stylesheet" href="~/css/rtl.css" />
+    <link rel="icon" type="image/png" href="~/images/favicon.ico">
+</head>
+<body>
+    @*<header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">school_payandegan</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>*@
+
+    <!-- Scroll top -->
+    <a href="#" class="scroll-top wow bounceInDown">
+        <i class="fas fa-angle-double-up"></i>
+    </a>
+    <div class="">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+
+    <script src="~/js/jquery.min.js"></script>
+    <!-- Boostrap Js  -->
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <!-- MeanMenu JS -->
+    <script src="~/js/jquery.meanmenu.js"></script>
+    <script src="~/js/jquery.magnific-popup.min.js"></script>
+    <!-- Owl carasol Js -->
+    <script src="~/js/owl.carousel.min.js"></script>
+    <!-- Wow js -->
+    <script src="~/js/wow.min.js"></script>
+    <!-- Isotope Js -->
+    <script src="~/js/isotope.pkgd.min.js"></script>
+    <!-- Form Validator Js  -->
+    <script src="~/js/form-validator.min.js"></script>
+    <!-- Contact Form Js -->
+    <script src="~/js/contact-form-script.js"></script>
+    <!-- Main js -->
+    <script src="~/js/main.js"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
