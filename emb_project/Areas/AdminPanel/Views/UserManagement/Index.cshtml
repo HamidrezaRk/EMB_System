@@ -21,28 +21,38 @@
                             <td>@Html.DisplayNameFor(model => model.BirthDate)</td>
                             <td>@Html.DisplayNameFor(model => model.Date_Register)</td>
                             <td>@Html.DisplayNameFor(model => model.Role.Title)</td>
+                            <td>@Html.DisplayNameFor(model => model.UserAvatar)</td>
                             <td>عملیات</td>
                         </tr>
                     </thead>
                     <tbody id="myTable">
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>@item.FullName</td>
-                                <td>@item.UserName</td>
-                                <td>@item.mobile</td>
-                                <td>@item.BirthDate</td>
-                                <td>@item.Date_Register</td>
-                                <td>@item.Role.Title</td>
-                                <td>
-                                    <a class="btn" asp-controller="UserManagement" asp-action="Edit" asp-route-id="@item.Id">
-                                        <i class="fa fa-edit" style="color:#495057"></i>
-                                    </a>
-                                    <a href="#" onclick="FuncDelUser('@item.Id')">
-                                        <i class="fa fa-trash" style="color:#ca0808"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>@item.FullName</td>
+                            <td>@item.UserName</td>
+                            <td>@item.mobile</td>
+                            <td>@item.BirthDate</td>
+                            <td>@item.Date_Register</td>
+                            <td>@item.Role.Title</td>
+                            <td>
+                            <div class="form-group">
+                                <img class="img-bordered col-md-12 col-xs-12 col-sm-12" 
+                                     
+                                     src="~/upload/indexImage/userimage/normalimage/@item.UserAvatar"
+                                     style="height:100px; width:90px; margin:5px auto;" />
+                            </div>
+
+                            </td>
+                            <td>
+                                <a class="btn" asp-controller="UserManagement" asp-action="Edit" asp-route-id="@item.Id">
+                                    <i class="fa fa-edit" style="color:#495057"></i>
+                                </a>
+                                <a href="#" onclick="FuncDelUser('@item.Id')">
+                                    <i class="fa fa-trash" style="color:#ca0808"></i>
+                                </a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

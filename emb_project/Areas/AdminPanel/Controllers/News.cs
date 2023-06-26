@@ -33,6 +33,7 @@ namespace emb_project.Areas.AdminPanel.Controllers
             return View(result);
         }
     
+        [HttpPost]
         // Post // Uploadimage
         public async Task< ActionResult> Uploadimage(IFormFile files)
         {
@@ -93,11 +94,11 @@ namespace emb_project.Areas.AdminPanel.Controllers
         public async Task< ActionResult> Create(NewsViewModelForInsert model )
         {
             PlaceNewsInIndexPageViewModel indexPage = new PlaceNewsInIndexPageViewModel();
-           // if(ModelState.IsValid)
-           // {
+           if(ModelState.IsValid)
+            {
                 _admin.AddNews(model);
                 return Redirect("Index");
-            //}
+            }
             ViewBag.CategoryID_fk = new SelectList(await _admin.GetCategories(), "id", "Title");
             ViewBag.PlaceNewsID = new SelectList(indexPage.GetPlaceNewsInIndexPageViewModel(), "id", "Title");
             return View(model);

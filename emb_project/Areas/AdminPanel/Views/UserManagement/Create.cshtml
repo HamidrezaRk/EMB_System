@@ -8,15 +8,12 @@
 
 
 
-<div class="card card-primary col-md-8 col-lg-8 offset-2" >
-    <div class="card-header">
-        <h3 class="card-title">فرم ایجاد کاربر</h3>
-    </div>
+<div class="row center-block box box-primary">
+    <div class="col-md-10 col-md-offset-1 col-lg-10 col-lg offset-2" style="margin-bottom:15px; margin-top:15px;">
+        <form asp-area="AdminPanel" asp-controller="UserManagement" asp-action="Create" method="post" enctype="multipart/form-data">
 
-    <!-- /.card-header -->
-    <!-- form start -->
-    <form asp-area="AdminPanel" asp-controller="News" asp-action="Create" method="post" enctype="multipart/form-data" >
-        <div class="card-body">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <!-- /FullName -->
             <div class="form-group">
                 <label asp-for="FullName" class="control-label"></label>
@@ -53,55 +50,75 @@
             <!-- /End-RoleUser-->
             <!-- /Date-->
             <div class="form-group" style="height:30px; margin-bottom:25px;">
-                <div style="font-size:15px;" class="col-md-6">
+                <div style="font-size:15px;padding-top:15px" class="col-md-6">
                     <label asp-for="Date_Register" class="col-md-4 control-label"></label>
-                    <input asp-for="Date_Register" type="text" value="@ViewBag.Shamsidate" style="border:0px;" />
+                    <label class="col-md-4 control-label">@ViewBag.Shamsidate</label>
                 </div>
-                <div style="font-size:15px;" class="col-md-6">
-                    <input type="date" id="birthday" name="birthday" data-jdp>
+                <!-- /End-Date -->
+                <!-- /Date-->
+                <div style="font-size:15px;float:left;margin-top:-30px" class="col-md-6">
+                    <input style="float:left;margin-left:175px;" type="date" id="birthday" name="birthday" data-jdp>
                     <label asp-for="BirthDate" class="col-md-4 control-label"></label>
                     <input asp-for="BirthDate" type="text" style="border:0px;" />
+                    <span asp-validation-for="BirthDate" class="text-danger"></span>
                 </div>
 
             </div>
             <!-- /End-Date -->
             <!-- /End-mobile -->
-            <!-- Start upload -->
-            <div class="form-group">
-                <label for="exampleInputFile">ارسال فایل</label>
-                <div class="input-group">
-                    <div class="custom-file">
+            @* تصویر شاخص *@
+            <div class="form-group row">
+                <div class="col-md-4 col-lg-4">
 
-                        <input asp-for="UserAvatar" type="file" class="custom-file-input" id="files" name="files">
+                    <label asp-for="UserAvatar" class="control-label"></label>
+                    <div class="form-horizontal">
 
-                        <label asp-for="UserAvatar" class="custom-file-label" for="exampleInputFile">انتخاب فایل</label>
+                        <input asp-for="UserAvatar" type="file" id="files" name="files" />
+
+                        <input type="button" onclick="UploadImage()" id="btnupload" class="btn btn-info" value="آپلود و نمایش تصویر" />
+
                     </div>
-                    <div class="input-group-append">
+                    <span asp-validation-for="UserAvatar" class="text-danger"></span>
 
-                        <input type="button" onclick="UploadImage()" id="btnupload" class="btn btn-info" value="Submit" />
+                </div>
+
+                <div class="col-md-4 col-lg-4">
+                    <div class="form-group">
+                        <img id="imgindex" class="img-bordered col-md-12 col-xs-12 col-sm-12"
+                             src="~/upload/indexImage/normalimage/defaultpic.jpg" alt="UserImage"
+                             style="height:100px; width:90px; margin:5px auto;" />
                     </div>
 
-                </div>
+                    <!-- Start messagebox -->
 
-                <!-- Start messagebox -->
+                    <div id="divmessage" class="text-center hidden" style="color:green;">
+                    </div>
+                    @*//  <div class="text center hidden" style="color:yellow;">@ViewBag.ma</div>*@
+                    <div id="divmessage-error" class="text-center hidden" style="color:red;">
+                    </div>
+                    <!-- End messagebox -->
 
-                <div id="divmessage" class="text-center hidden" style="color:green;">
                 </div>
-
-                <div id="divmessage-error" class="text-center hidden" style="color:red;">
-                </div>
-                <!-- End messagebox -->
             </div>
-            <!-- End upload -->
 
-        </div>
-        <!-- /.card-body -->
 
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">ارسال</button>
-            <a asp-action="Index" class="btn btn-danger">بازگشت</a>
-        </div>
-    </form>
+            <div class="form-group">
+                <input type="submit" value="ایجاد" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-danger">بازگشت</a>
+            </div>
+
+
+        </form>
+
+        @if (ViewBag.SuccessMessage != "")
+        {
+            <span style="color:green;">
+                @ViewBag.SuccessMessage
+            </span>
+        }
+
+
+    </div>
 </div>
 
 
@@ -113,6 +130,41 @@
 
 
     <script>
+        
+        var UploadImage = function () {
+            var data = new FormData;
+            var file = $("#files").get(0);
+            var files = file.files;
+
+            for (var i = 0; i < files.length; i++) {
+                data.append('files', files[i]);
+            }
+
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("Uploadimage", "UserManagement", new { area = "AdminPanel"})',
+                data: data,
+                contentType: false,
+                processData: false,
+            }).done(function (result) {
+                if (result.status == "success") {
+
+                    $("#imgindex").attr('src', "\\upload\\indexImage\\userimage\\\\normalimage\\" + result.imagename);
+
+                    $("#divmessage").removeClass('hidden');
+                    $("#divmessage").text("تصویر با موفقیت آپلود شد");
+
+                    $("#IndexImage").val(result.imagename);
+                    }
+                }).fail(function (result) {
+                    if (result.status != "success") {
+                        $("#divmessage-error").removeClass('hidden');
+                        $("#divmessage-error").text("در هنگام آپلود مشکلی رخ داد");
+
+                    }
+                });
+        }
+
         var jalaliDatepicker = {};
         jalaliDatepicker.startWatch({
             dayRendering: function (dayOptions, input) {
@@ -131,39 +183,6 @@
 
 
         /*< !-- /DatePicker -->*/
-        var UploadImage = function () {
-            var data = new FormData;
-            var file = $("#files").get(0);
-            var files = file.files;
-
-            for (var i = 0; i < files.length; i++) {
-                data.append('files', files[i]);
-            }
-
-            $.ajax({
-                type: "post",
-                url: '@Url.Action("UploadFile", "UserManagement", new { area = "AdminPanel"})',
-                data: data,
-                contentType: false,
-                processData: false,
-            }).done(function (result) {
-                if (result.status == "success") {
-
-                    $("#imgindex").attr('src', "\\upload\\userimage\\normalimage\\" + result.imagename);
-
-                    $("#divmessage").removeClass('hidden');
-                    $("#divmessage").text("تصویر با موفقیت آپلود شد");
-
-                    $("#IndexImage").val(result.imagename);
-                    }
-                }).fail(function (result) {
-                    if (result.status != "success") {
-                        $("#divmessage-error").removeClass('hidden');
-                        $("#divmessage-error").text("در هنگام آپلود مشکلی رخ داد");
-
-                    }
-                });
-        }
     </script>
 
 
