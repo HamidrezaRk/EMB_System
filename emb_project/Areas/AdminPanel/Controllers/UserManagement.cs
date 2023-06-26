@@ -43,18 +43,16 @@ namespace emb_project.Areas.AdminPanel.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadFile(IFormFile files)
+        public async Task<ActionResult> Uploadimage(IFormFile files)
         {
-            // string filename = _upload.UploadFiles(files, "upload\\indexImage\\", "");
-
+            //Different situations
             if (ModelState.IsValid)
             {
                 if (files == null)
                 {
-                    ViewBag.message = "کاربر گرامی لطفا قبل از ثبت کاربر جدید یک تصویر برای کاربر انتخاب نمایید";
+                    ViewBag.message = "کاربر گرامی لطفا قبل از ثبت خبر جدید یک تصویر برای خبر انتخاب نمایید";
                     return View();
                 }
-
                 var supportedTypes = new[] { "jpg", "jpeg", "png", "bmp" };
                 var fileExt = System.IO.Path.GetExtension(files.FileName).Substring(1);
                 if (!supportedTypes.Contains(fileExt))
@@ -62,28 +60,26 @@ namespace emb_project.Areas.AdminPanel.Controllers
                     ViewBag.message = "شما مجاز به وارد کردن فایل با فرمت های jpg-jpeg-gif-png-bmp می باشد";
                     return View();
                 }
-
                 if (files.Length > 0)
                 {
+                    //Create Guid Name=> "-Guid+NameFile"
                     string createfilename = Guid.NewGuid().ToString().Replace("-", "");
                     var fileName = createfilename + Path.GetFileName(files.FileName);
                     string webRootPath = _webHostEnvironment.WebRootPath;
-                    var path = webRootPath + "\\upload\\userimage\\normalimage\\" + fileName.Trim();
+                    //Upload In Location + Trim EndtoStart
+                    var path = webRootPath + "\\upload\\indexImage\\userimage\\normalimage\\" + fileName.Trim();
+
                     using (Stream fileStream = new FileStream(path, FileMode.Create))
                     {
                         await files.CopyToAsync(fileStream);
                     }
 
-
-
-
-
                     return Json(new { status = "success", message = "تصویر با موفقیت آپلود شد.", imagename = fileName });
                 }
-            }
-            return null;
-        }
 
+            }
+            return View();
+        }
         // POST: UserManagement/Create
         [HttpPost]
         [ValidateAntiForgeryToken]

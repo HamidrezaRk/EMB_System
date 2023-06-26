@@ -122,8 +122,15 @@
                              style="height:100px; width:90px; margin:5px auto;" />
                     </div>
 
+                    <!-- Start messagebox -->
+
                     <div id="divmessage" class="text-center hidden" style="color:green;">
                     </div>
+                  @*//  <div class="text center hidden" style="color:yellow;">@ViewBag.ma</div>*@
+                    <div id="divmessage-error" class="text-center hidden" style="color:red;">
+                    </div>
+                    <!-- End messagebox -->
+
                 </div>
             </div>
 
@@ -171,7 +178,7 @@
             }).done(function (result) {
                 if (result.status == "success") {
 
-                    $("#imgindex").attr('src', "\\upload\\userimage\\normalimage\\" + result.imagename);
+                    $("#imgindex").attr('src', "\\upload\\indexImage\\normalimage\\" + result.imagename);
 
                     $("#divmessage").removeClass('hidden');
                     $("#divmessage").text("تصویر با موفقیت آپلود شد");

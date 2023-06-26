@@ -40,14 +40,19 @@ namespace emb_project.Entity
 
         [Display(Name = "نام و نام خانوادگی")]
         [MaxLength(100)]
+        [Required(AllowEmptyStrings = false, ErrorMessage = PubliClass.EnterMessage)]
+
         public string FullName { get; set; }
 
         [Display(Name = "تاریخ تولد")]
         [MaxLength(10)]
+        [Required(AllowEmptyStrings = false, ErrorMessage = PubliClass.EnterMessage)]
+
         public string BirthDate { get; set; }
 
         [Display(Name = "موبایل")]
         [MaxLength(11)]
+        [Required(AllowEmptyStrings = false, ErrorMessage = PubliClass.EnterMessage)]
         [Phone]
         public string mobile { get; set; }
 
@@ -57,6 +62,7 @@ namespace emb_project.Entity
 
         [Display(Name = "تصویر")]
         [MaxLength(100)]
+
         public string UserAvatar { get; set; }
 
         public virtual ICollection<News> news { get; set; }
